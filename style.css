@@ -1,0 +1,324 @@
+/*************menu superior *************/
+header {
+  background-color: rgb(31, 40, 55);
+  margin-bottom: 1em;
+  background: linear-gradient(90deg, #dd4814, #77216f, #5e2750, #2c001e);
+}
+
+.menu{
+	position: fixed;
+	top: 0;
+	right: 0;
+	padding: 0 21;
+	margin: 0 0;
+    width: 100%;
+	height: 40px;
+	background: linear-gradient(#5a584f, #4c4a44, #41403b, #41403ba1);
+	box-shadow: 0px 0px 0px, 3px 3px 5px;
+	z-index: 15;
+}
+.reloj{
+	margin: 8px;
+	display: block;
+	font-weight: 100;
+	text-align: center;
+	font-family: monospace;
+	--bg: #e5e5e5;
+    --shadowLg: #fff;
+    --shadow: rgba(13,39,80,.26);
+}
+.reloj:nth-child(1){
+    float: right;
+    width: 170px;
+    line-height: 15px;
+    border-radius: 150px;
+    font-size: 15px;
+    box-shadow: -5px -5px 5px ,
+    5px 5px 5px ;  
+    color: #fff;
+    border: 4px solid transparent;
+	font-weight: bold;
+}
+#fecha{
+	height: 70px;
+    font-size: 12px;
+    counter-reset: #5d5d5d;
+} 
+
+/************* body ***********/
+
+body {
+	background: linear-gradient(90deg, #dd4814, #77216f, #5e2750, #2c001e);
+	width: 100%;
+    height: 100%;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
+/************* menu lateral***********/
+
+.menup{
+	position: fixed;
+	width: 70px;
+	height: 100%;
+	top: 40px;
+	box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.4),
+                0px 0px 20px 10px rgba(0,0,0,0.5);
+	z-index: 12;
+	border: 5px solid #0000;
+	background-image: url("img/vidrio.png");
+	background-size: cover;
+	background-position: center;
+	opacity: 0.8;
+}
+
+#logo {
+	width: 70px;
+	margin: 3px 0 0 -3px;
+	transition: 2s all;
+	cursor: pointer;
+}
+
+#logo:hover{
+	
+	transform: scale(1) rotate(360deg);
+}
+#iconoterminal {
+	width: 60px;
+	margin: 10px 0 0 4px;
+	transition: 1s all;
+	cursor: pointer;
+	box-shadow: 0px -2px 0px 2px rgba(0,0,0,0.4);
+	border-radius: 10px;
+}
+
+#iconoterminal:hover{
+	box-shadow: 0px -5px 10px rgba(0,0,0,0.5), inset 0px 10px 10px -12px #fff;
+	transform: scale(1.1) ;
+}
+
+/************* ventana consola ***********/
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: transparent;
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+	min-width: 960px;
+	min-height: 600px;
+	max-width: 960px;
+	max-height: 600px;
+	z-index: 6;
+}
+.overlay:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+#popupBody{
+    width: 70%;
+    padding: 5px 1px 1px;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 0 5px #CCC;
+    background: #000;
+    transition: all 5s ease-in-out;
+    margin: 100px 10px 5px 100px;
+	height: 315px;
+}
+
+.barraterminal{
+	width: 50%;
+	position: fixed;
+	display: inline-block;
+	margin: 0 0 0 1px;
+	font-family: monospace;
+	font-size: 18px;
+}
+
+h4{
+	text-align: center;
+	color: #fff;
+	font-family: monospace;
+}
+
+nav li{
+	display: inline-block;
+	background-color: #ffffff82;
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	line-height: 20px;
+	transition: background-color 0.2s ease;
+}
+
+nav li:hover{
+	background-color: white;
+	text-decoration: none;
+}
+
+nav li:nth-child(1){
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	line-height: 20px;
+	transition: background-color 0.2s ease;
+	background: #ff0606c9;
+}
+
+nav li:hover:nth-child(1){
+	background-color: #f00;
+	text-decoration: none;
+}
+
+h1{
+  font-family: sArial, Helvetica, sans-serif;
+  font-size: 28px;
+  color: rgb(255, 102, 0);
+  font-weight: bold;
+}
+
+/************************** tablero ****************/
+
+.consola{
+	background-color: #2c001e;
+	width: 95%;
+	margin: 25px 0px 0 2px;
+	font-size: 16px;
+	color: #fff;
+	padding: 15px;
+	font-family: monospace;
+}
+
+.root{
+	display: inline-flex;
+	margin-bottom: 10px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.root em{
+	font-size: 18px;
+	color: #00FF00;
+}
+
+.entrada{
+	font-size: 18px;
+	background: transparent;
+	width: 530px;
+	border: none;
+	resize: none;
+	outline: none;
+	font-family: monospace;
+	margin: -1px 0px;
+	padding: 0px;
+	height: 250px;
+	color: #fff;
+}
+
+form {
+  width: 80%px;
+  margin: 60px auto;
+  background-color: #2c001e;
+  padding: 20px;
+  
+}
+
+/********************* botones*********************/
+
+.boton {
+	background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.boton:hover {
+	border: white solid 2px;
+	color: white;
+}
+
+.botoncopiar {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.botoncopiar:hover {
+	border: white solid 2px;
+	color: white;
+}
+
+/********************* pop-ups ***********************/
+
+#popupbody{
+    width: 30%;
+    padding: 2%;
+    border-radius: 15px;
+    box-shadow: 0 0 5px #CCC;
+    background: #002b36;
+    position: relative;
+    transition: all 5s ease-in-out;
+    margin: 20% auto;    
+	font-family: monospace;
+}
+
+.textpopup{
+	font-size: 20px;
+	color: #000000;
+	background:#002b36;
+	width: 100%;
+	height: 40px;
+	border: none;
+	resize: none;
+	border-radius: 0.3em;
+	margin-top: 5px;
+	margin-bottom: 7px;
+	font-family: monospace;
+	text-align: center;
+	z-index: 15;
+}
+
+.popupbody{
+    width: 75px;
+	height: 30px;
+    margin: 0 auto;
+    position: relative;
+	font-family: monospace;
+}
+
+.botonpop {
+	background-color: transparent;
+	border: none;
+	font-size: 20px;
+	color: #8292a2;
+	vertical-align: top;
+	font-family: monospace;
+	margin: 0 auto;
+	position: relative;
+	width: 75px;
+	height: 30px;
+}
+
+#cerrar{
+    bottom: 10px;
+    margin-left: 35%;
+}

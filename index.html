@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+		<title>Encriptador de Textos</title>
+		<link rel="stylesheet" href="reset.css">
+		<link rel="stylesheet" href="style.css">
+		<script src="encriptar-js.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=Bellota&display=swap" rel="stylesheet">
+	</head>
+	
+	<title>Encriptador de Textos
+	</title>
+	
+	<script>
+		window.onload = function() {
+			
+			// Caja de texto1
+			
+			document.getElementById('plaintext').value = '';
+		}
+	</script>
+	
+	<header><span id="load"></span>
+		<div class="menu">
+			<div class="reloj">
+				<span id="fecha"></span>
+				<span id="hora"></span>
+			</div>
+		</div>
+		
+		<div class="menup">
+			<ul> 
+				<li><img src="img/logo.png" alt="logo" id="logo"></li>
+				<li><a href="#popup"><img src="img/terminal.png" alt="iconoterminal" id="iconoterminal"></a></li>
+				<li><a href="contacto.html"></a></li>
+			</ul>
+		</div>
+	</header>
+	<!--ejecutamo la funcion startTime() cuando se carge la pagina-->
+	<body onload="startTime()">
+		<main>
+			<div id="popup" class="overlay">
+				<div id="popupBody">
+					<nav class="barraterminal">	
+						<ul class="barraterminal">
+							<li><a id="cerrarv" href="#">X</a></a></li>
+							<li>&#8212;</li>
+							<li>&#10064;</li>
+						</ul>
+						<h4>~ Encriptador de Textos ~</h4>
+					</nav>
+					
+					<div class="popupContent">
+						<div class="consola">
+							<div>
+								<p class="root" id="root"><em>root@root</em>:<em>~</em>$ 
+							  
+									<!-- Crea la caja para capturar el texto -->
+									<textarea class="entrada" id="plaintext" name="plaintext" rows="0" cols="0" autofocus="" required="" placeholder="Escriba aqui su texto"></textarea>
+								</p>
+							</div> 
+						</div>
+							
+						<form>						
+							
+							<!-- Crea el boton para copiar el texto -->
+							
+							<button class="botoncopiar" id="copy-button">Copiar</button>
+							
+							<!-- Crea dos botones para encriptar y desencriptar el texto -->
+							
+							<button id="encrypt" class="boton" onclick="encrypt()">Encriptar</button>
+							<button id="decrypt" class="boton" onclick="decrypt()">Desencriptar</button>							
+						</form>
+					</div>
+				</div>
+			</div>
+		</main>
+		
+		<!------------ Pop-ups para los errores ----------->
+		
+		<div id="popup3" class="overlay">
+			<div id="popupbody">
+				<div class="popupContent">
+					<p class="textpopup">No se encontro ningun texto para encriptar</p>
+					<a id="cerrar" href="#popup">
+					<button class="botonpop" value="Cerrar">cerrar</button></a>
+				</div>
+			</div>
+		</div>
+		
+		<div id="popup1" class="overlay">
+			<div id="popupbody">
+				<div class="popupContent">
+					<p class="textpopup">No se encontro ningun texto para desencriptar</p>
+					<a id="cerrar" href="#popup">
+					<button class="botonpop" value="Cerrar">cerrar</button></a>
+				</div>
+			</div>
+		</div>
+		
+		<div id="popup2" class="overlay">
+			<div id="popupbody">
+				<div class="popupContent">
+					<p class="textpopup">No se encontro ningun texto para copiar</p>
+					<a id="cerrar" href="#popup">
+					<button class="botonpop" value="Cerrar">cerrar</button></a>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+		
+			<!-------------- Esta funcion es para mover la ventana --------------->
+		
+			var isMouseDown = false;
+			var offsetX, offsetY;
+			$("#popup nav.barraterminal").on("mousedown", function(e) {
+				isMouseDown = true;
+					offsetX = e.clientX - $("#popup").offset().left;
+					offsetY = e.clientY - $("#popup").offset().top;
+				});
+				
+				$(document).on("mousemove", function(e) {
+					if (isMouseDown) {
+						$("#popup").offset({
+							left: e.clientX - offsetX,
+							top: e.clientY - offsetY
+						});
+					}
+				});
+			
+				$(document).on("mouseup", function() {
+					isMouseDown = false;
+				});
+					
+				<!----Esta funcion nos da la hora y la fecha
+			
+				function startTime() {
+					
+					var hoy = new Date(),
+					horas = hoy.getHours(),
+					minutos = hoy.getMinutes(),
+					fecha = hoy.getDate(),
+					day = hoy.getDay(),
+					month = hoy.getMonth();
+
+					horas = (horas == 0) ? 12 : horas;
+					horas = (horas > 12) ? horas - 12 : horas;
+
+						<!---- Pasaremos las horas y minutos a una funcion que crearemos mas adelante
+						
+					horas = checkTime(horas);
+					minutos = checkTime(minutos);
+
+						<!----Primero para los dias y meses crearemos un arreglo esto por que la funcion que nos debuelve los dias y meses nos los debuelbe en numero ---->
+						
+					var dia = ["Dom", " Lun", "Mart", "Mier", "Jue", "vier", "Sab"],
+						mes = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+						
+						<!----Ahora solo imprimimos los datos
+						
+					var hr = document.getElementById('hora').innerHTML = horas + ":" + minutos,
+						dt = document.getElementById('fecha').innerHTML = dia[day] + ", " + fecha + " De " + mes[month];
+
+						<!----esta funcion hara que nuestro escript se ejecute constantemente
+						
+					var hora = setTimeout(function() {
+						startTime();
+					}, 500);
+				}
+				<!----Solo falta crear la funcion que nos diga si tiene uno o dos dijitos esto para que si solo tiene uno le agrege u  cero a la izquierda
+				
+				function checkTime(e) {
+					if (e < 10) {
+						e = "0" + e;
+					}
+					return e;
+				}
+				
+				<!-------------- Script para encriptar y desencriptar el texto --------------->
+				
+				<!---------------------------- Boton encriptar-------------------------------------->
+			
+				<!----Funcion para encriptar el texto
+		  
+			function encrypt() {
+		  
+				<!---- Obtiene el texto a encriptar o desencriptar
+				
+				var plaintext = document.getElementById('plaintext').value;
+				var password = 'password';
+				
+				<!---- Verefica que la caja de texto no este vacia y muestra un popup si la caja de texto esta vacia
+				
+				if (plaintext.trim() !== '') {
+					var ciphertext = CryptoJS.AES.encrypt(plaintext, password);
+					document.getElementById('plaintext').value = ciphertext;
+				} 
+				
+				else {
+					window.location.href = "#popup3";
+					return;
+				}
+				
+				<!---- Encripta el texto utilizando el algoritmo AES y la clave proporcionada
+				
+				var ciphertext = CryptoJS.AES.encrypt(plaintext, password);
+
+				<!---- Muestra el texto encriptado en el formulario
+				
+				document.getElementById('plaintext').innerHTML = ciphertext;
+				
+			}
+
+			<!---------------------------- Boton desencriptar-------------------------------------->
+			
+			<!---- Funcion para desencriptar el texto
+			
+			function decrypt() {
+				var ciphertext = document.getElementById('plaintext').value;
+				var password = 'password';
+				
+				<!---- Verefica que la caja de texto no este vacia y muestra un popup si la caja de texto esta vacia
+				
+				if (ciphertext.trim() !== '') {
+					var plaintext = CryptoJS.AES.decrypt(ciphertext, password);
+					if(plaintext.toString(CryptoJS.enc.Utf8) === plaintext.toString(CryptoJS.enc.Utf8)){
+						document.getElementById('plaintext').value = plaintext.toString(CryptoJS.enc.Utf8);
+					}
+				}
+				
+				else {
+					window.location.href = "#popup1";
+				} 
+				
+				
+			}
+	
+			<!---------------------------- Boton copiar---------------------------------->
+
+			const plaintext = document.getElementById('plaintext');
+			const copyButton = document.getElementById('copy-button');
+
+			copyButton.addEventListener('click', () => {
+				if(plaintext.value.trim() !== '') {
+					navigator.clipboard.writeText(plaintext.value).then(function() {
+					
+						<!---- Cambia el texto del boton al hacer click
+					
+						copyButton.innerHTML = 'Copiado';
+						
+						<!---- Cambia el color del boton al hacer click
+						
+						copyButton.style.background = "#1F0";
+						
+						<!---- Cambia el borde del boton al hacer click
+						
+						copyButton.style.border = "#1F0";
+						
+						<!---- Determina el tiempo para volver al boton a su estado original
+						
+						setTimeout(resetButton, 3000);
+					});
+				
+				}
+			
+				else {
+					window.location.href = "#popup2";
+				}
+			});
+			
+			function resetButton() {
+				copyButton.innerHTML = 'Copiar';
+				copyButton.style.backgroundColor = '#3498db';
+
+			}
+			
+			var botonencrip = document.getElementById("encrypt");
+			var botondesencrip = document.getElementById("decrypt");
+			var load = document.getElementById("load");
+			var cont = 0;
+			var porciento = 0;
+			var procesado = "";
+			var proceso;
+			var run = false;
+			var screenWidth = screen.width
+			
+			function reload() {
+				cont = 0;
+				porciento = 0;
+				procesado = "";
+				load.innerHTML = "";
+			}
+			
+			function procesload(limpiar, callback) {
+				cont += 1;
+				porciento = Math.round((100 / 70) * cont);
+				procesado = "#" + procesado;
+				load.innerHTML =	"" + procesado + "" /*+ porciento + "%"*/;
+					
+				if (screenWidth > 480) {
+					if (cont == 70) {
+						clearInterval(proceso);
+						limpiar();
+						callback();
+					}
+				}
+					
+				else {
+					if (cont == 27) {
+						clearInterval(proceso);
+						limpiar();
+						callback();
+					}
+				}
+			}
+			
+			function iniciarencriptacion() {
+				proceso = setInterval(procesload, 10, reload, encrypt);
+			}
+				
+			function iniciardesencriptacion() {
+				proceso = setInterval(procesload, 10, reload, decrypt);
+			}
+
+			botonencrip.onclick = iniciarencriptacion;
+			botondesencrip.onclick = iniciardesencriptacion;
+		</script> 
+	</body>
+</html>
